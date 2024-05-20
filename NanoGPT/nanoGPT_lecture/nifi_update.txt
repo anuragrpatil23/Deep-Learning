@@ -1,0 +1,89 @@
+cp /nifi/nifi-1.23.0/lib/nifi-dicom-1.4.nar /nifi/nifi-2.0.0-M1/lib
+
+cp /nifi/nifi-1.23.0/certs/* /nifi/nifi-2.0.0-M1/certs/
+
+cp /nifi/nifi-1.23.0/conf/flow.xml.gz /nifi/nifi-2.0.0-M1/conf
+
+cp -rp /nifi/nifi-1.23.0/content_repository/* /nifi/nifi-2.0.0-M1/content_repository/
+
+cp -rp /nifi/nifi-1.23.0/flowfile_repository/* /nifi/nifi-2.0.0-M1/flowfile_repository/
+
+cp -rp /nifi/nifi-1.23.0/database_repository/* /nifi/nifi-2.0.0-M1/database_repository/
+
+cp -rp /nifi/nifi-1.23.0/provenance_repository/* /nifi/nifi-2.0.0-M1/provenance_repository/
+
+cp -rp /nifi/nifi-1.23.0/conf/authorizations.xml /nifi/nifi-2.0.0-M1/conf/
+
+cp -rp /nifi/nifi-1.23.0/conf/users.xml /nifi/nifi-2.0.0-M1/conf/
+
+cp -rp /nifi/nifi-1.23.0/conf/flow.xml.gz /nifi/nifi-2.0.0-M1/conf/
+
+cp /nifi/nifi-1.23.0/.bashrc /nifi/nifi-2.0.0-M1
+
+cp /nifi/nifi-1.23.0/.profile /nifi/nifi-2.0.0-M1
+
+cp -r /nifi/nifi-1.23.0/drivers/* /nifi/nifi-2.0.0-M1/drivers
+
+
+cp /nifi/nifi-1.23.0/.* .  /nifi/nifi-2.0.0-M1(backup first)
+
+Update /nifi/nifi-2.0.0-M1/.bashrc to point to new path for nifi
+
+Update login scripts to check for fully-qualified paths
+
+Update /etc/passwd for nifi to use new directory
+
+
+
+
+2024-01-22 22:15:21,276 ERROR [NiFi logging handler] org.apache.nifi.StdErr Failed to start web server: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'securityFilterChain' defined in org.apache.nifi.web.security.configuration.WebSecurityConfiguration: Unsatisfied dependency expressed through method 'securityFilterChain' parameter 2; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.apache.nifi.web.security.configuration.JwtAuthenticationSecurityConfiguration': Unsatisfied dependency expressed through constructor parameter 2; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flowController' defined in class path resource [nifi-context.xml]: Cannot resolve reference to bean 'propertyEncryptor' while setting bean property 'encryptor'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'propertyEncryptor' defined in class path resource [nifi-context.xml]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.nifi.encrypt.PropertyEncryptor]: Factory method 'getPropertyEncryptor' threw exception; nested exception is org.apache.nifi.encrypt.EncryptionException: Algorithm [PBEWITHMD5AND256BITAES-CBC-OPENSSL] not supported for Sensitive Properties
+
+
+
+
+jdbc:sqlserver://msdw_prd.mountsinai.org;database=omop;integratedSecurity=true;encrypt=true;trustServerCertificate=true;authenticationScheme=JavaKerberos
+
+jdbc:sqlserver://;servername=msdw_prd.mountsinai.org;encrypt=true;integratedSecurity=true;trustServerCertificate=true;authenticationScheme=JavaKerberos;userName=service_airms-nifi@MSSMCAMPUS.MSSM.EDU;password=FuSW8w1-uyej-5I=AchEFrasP7vesWLC
+
+
+    jdbc:jtds:sqlserver://msdw_prd.mountsinai.org;trustServerCertificate=true;encrypt=true;integratedSecurity=true;authenticationScheme=JavaKerberos
+
+com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+/nifi/nifi-2.0.0-M1/drivers/test/jtds-1.3.1.jar
+
+/nifi/nifi-2.0.0-M1/drivers/test/sqljdbc_12.4/enu/jars/mssql-jdbc-12.4.2.jre11.jar
+
+net.sourceforge.jtds.jdbc.Driver
+
+
+default_tkt_enctypes = aes256-cts-hmac-sha1-96
+default_tgs_enctypes = aes256-cts-hmac-sha1-96
+
+
+
+/usr/bin/java -classpath /nifi/nifi-2.0.0-M1/./conf:/nifi/nifi-2.0.0-M1/./lib/javax.servlet-api-3.1.0.jar:/nifi/nifi-2.0.0-M1/./lib/jetty-schemas-5.2.jar:/nifi/nifi-2.0.0-M1/./lib/logback-classic-1.3.11.jar:/nifi/nifi-2.0.0-M1/./lib/logback-core-1.3.11.jar:/nifi/nifi-2.0.0-M1/./lib/jcl-over-slf4j-2.0.9.jar:/nifi/nifi-2.0.0-M1/./lib/jul-to-slf4j-2.0.9.jar:/nifi/nifi-2.0.0-M1/./lib/log4j-over-slf4j-2.0.9.jar:/nifi/nifi-2.0.0-M1/./lib/slf4j-api-2.0.9.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-per-process-group-logging-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-framework-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-server-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-python-framework-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-runtime-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-nar-utils-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-properties-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-property-utils-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-python-framework-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-python-extension-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-stateless-bootstrap-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-stateless-api-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-openai-module-2.0.0-M1.jar:/nifi/nifi-2.0.0-M1/./lib/nifi-text-embeddings-module-2.0.0-M1.jar -Dorg.apache.jasper.compiler.disablejsr199=true -Xmx32g -Xms32g -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8000
+ -Djava.security.krb5.conf=/nifi/nifi-2.0.0-M1/kerberos/krb5.ini
+  -Djava.security.auth.login.config=/nifi/nifi-2.0.0-M1/kerberos/jaas.conf
+   -XX:ParallelGCThreads=8
+    -XX:G1ReservePercent=20
+     -Djava.awt.headless=true
+      -XX:InitiatingHeapOccupancyPercent=35
+       -XX:ConcGCThreads=4
+        -Dsun.security.krb5.debug=true
+         -XX:+UseStringDeduplication
+          --add-opens=java.base/java.net=ALL-UNNAMED
+           -Dnifi.properties.file.path=/nifi/nifi-2.0.0-M1/./conf/nifi.properties
+            -Dnifi.bootstrap.listen.port=39367
+             -Dapp=NiFi -Dorg.apache.nifi.bootstrap.config.log.dir=/nifi/nifi-2.0.0-M1/logs org.apache.nifi.NiFi
+
+
+
+
+error code is 7
+error Message is Server not found in Kerberos database
+sname is MSSQLSvc
+
+
+
+jdbc:sqlserver://msdw_prd.mountsinai.org;database=omop;integratedSecurity=true;encrypt=true;trustServerCertificate=true;authenticationScheme=JavaKerberos;ServerSPN=patila06@MSSMCAMPUS.MSSM.EDU;
