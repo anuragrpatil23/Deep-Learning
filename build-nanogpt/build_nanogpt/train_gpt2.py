@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import math
 import pathlib
 import tiktoken
+import time
 
 import torch
 import torch.nn as nn
@@ -50,11 +51,13 @@ class CausalSelfAttention(nn.Module):
         v = v.view(B, T, self.n_head, C//self.n_head).transpose(1, 2)
 
         # attention (materializes the large (T, T) matrix for all the queries and keys)
-        att = (q@k.transpose(-2, -1)) * (1.0/ math.sqrt(k.size(-1)))
-        att = att.masked_fill(self.bias[:,:,:T, :T]==0, float('-inf'))
-        att = F.softmax(att, dim=-1)
+        # att = (q@k.transpose(-2, -1)) * (1.0/ math.sqrt(k.size(-1)))
+        # att = att.masked_fill(self.bias[:,:,:T, :T]==0, float('-inf'))
+        # att = F.softmax(att, dim=-1)
+        # y = att @ v # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs)
 
-        y = att @ v # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs)
+        y = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+
         y = y.transpose(1, 2).contiguous().view(B, T, C) # just ressemble everything again. this actually performs the concatination operation.
 
         #output projection
@@ -234,7 +237,10 @@ if torch.cuda.is_available():
 elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
     device = "mps"  
 print("Using device: ", device)
-    
+
+torch.manual_seed(1337)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(1337)
 
 class DataLoaderLite:
     def __init__(self, B, T):
@@ -272,25 +278,38 @@ class DataLoaderLite:
         return x, y
 
 # Create dataloader to get x and y
-train_loader = DataLoaderLite(B=4, T=32)
+train_loader = DataLoaderLite(B=16, T=1024)
+
+torch.set_float32_matmul_precision('high')
 
 # Create the Model
-model = GPT(GPTConfig())
+model = GPT(GPTConfig(vocab_size=50304))
 model.to(device)
+model = torch.compile(model)
 
 #optimize!
 optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
 for i in range(50):
+    t0 = time.time()
     x, y = train_loader.next_batch()
     x, y = x.to(device), y.to(device)
     optimizer.zero_grad()
-    logits, loss = model.forward(x, target=y)
+
+    with torch.autocast(device_type=device, dtype=torch.bfloat16):
+        logits, loss = model.forward(x, target=y)
+        
     loss.backward()
     optimizer.step()
-    print(f"step {i}, loss: {loss.item()}") 
+    torch.cuda.synchronize() #wait for cuda instructions to finish. cpu is just sending instructions to cuda at this point so python interpretator gotta wait for those tasks to finish before timing them. 
+    t1 = time.time()
+    dt = (t1-t0)*1000 # time diff in milliseconds. 
+    tokens_per_sec = (train_loader.B*train_loader.T)/(t1-t0)
+
+    print(f"step {i}, loss: {loss.item()}, dt: {dt:.2f}ms, tok/sec:{tokens_per_sec:.2f}s")
 
 
 print(logits.shape)
+
 import sys; sys.exit(0)
 #load the model
 num_return_sequences = 5
