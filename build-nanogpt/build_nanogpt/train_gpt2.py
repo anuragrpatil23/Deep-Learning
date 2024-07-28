@@ -28,6 +28,7 @@ class CausalSelfAttention(nn.Module):
         self.c_attn = nn.Linear(config.n_embd, 3*config.n_embd)
         # output projection (what is this for?)
         self.c_proj = nn.Linear(config.n_embd, config.n_embd)
+        self.c_proj.NANOGPT_SCALE_INIT = 1
 
         #regularization
         self.n_head = config.n_head
@@ -69,6 +70,7 @@ class MLP(nn.Module):
         self.c_fc = nn.Linear(config.n_embd, 4*config.n_embd)
         self.gelu = nn.GELU(approximate='tanh')
         self.c_proj = nn.Linear(4 * config.n_embd, config.n_embd)
+        self.c_proj.NANOGPT_SCALE_INIT = 1
 
     def forward(self, x):
         x = self.c_fc(x)
@@ -108,6 +110,24 @@ class GPT(nn.Module):
                 ln_f = nn.LayerNorm(config.n_embd)
             ))
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias = False)
+
+        #weight sharing scheme
+        self.transformer.wte.weight = self.lm_head.weight
+
+        # init params
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            std = 0.02
+            if hasattr(module, "NANOGPT_SCALE_INIT"):
+                std *= (2*self.config.n_layer) ** -0.5
+            torch.nn.init.normal_(module.weight, mean=0.0, std=std)
+            if module.bias is not None:
+                torch.nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+
 
     def forward(self, idx, target=None):
         # idx is of shape (B, T)
@@ -213,29 +233,56 @@ if torch.cuda.is_available():
     device = "cuda"
 elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
     device = "mps"  
-    
 print("Using device: ", device)
     
 
-dir_path = pathlib.Path(__file__).parent.absolute()
-#Get the dataset
-with open(dir_path.joinpath('input.txt')) as file:
-    data = file.read()
+class DataLoaderLite:
+    def __init__(self, B, T):
+        self.B = B
+        self.T = T
 
-enc = tiktoken.get_encoding('gpt2')
-tokens = enc.encode(data)
-x = torch.tensor(tokens, dtype=torch.long).to(device)
-buff = x[:128+1]
-B, T = 4, 32
-x = buff[:-1].view(B, T)
-y = buff[1:].view(B, T)
+        # at init load tokens from disk and store them in memory
+        dir_path = pathlib.Path(__file__).parent.absolute()
+        #Get the dataset
+        with open(dir_path.joinpath('input.txt')) as file:
+            data = file.read()
 
+        enc = tiktoken.get_encoding('gpt2')
+        tokens = enc.encode(data)
+        self.tokens = torch.tensor(tokens, dtype=torch.long)
+        print(f"loaded {len(self.tokens)} tokens")
+        print(f"1 epoch = {len(self.tokens)//(B*T)} batches")
+
+        #state
+        self.current_position = 0
+
+    def next_batch(self):
+        B, T = self.B, self.T
+        buf = self.tokens[self.current_position:self.current_position + B*T + 1]
+        x = buf[:-1].view(B, T) #inputs
+        y = buf[1:].view(B, T) #targets
+
+        # advance the position in the tensor
+        self.current_position += B*T
+
+        #if is the end of the data, loop back around
+        if self.current_position + (B*T + 1)> len(self.tokens):
+            self.current_position = 0
+
+        return x, y
+
+# Create dataloader to get x and y
+train_loader = DataLoaderLite(B=4, T=32)
+
+# Create the Model
 model = GPT(GPTConfig())
 model.to(device)
 
 #optimize!
 optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4)
 for i in range(50):
+    x, y = train_loader.next_batch()
+    x, y = x.to(device), y.to(device)
     optimizer.zero_grad()
     logits, loss = model.forward(x, target=y)
     loss.backward()
@@ -243,9 +290,7 @@ for i in range(50):
     print(f"step {i}, loss: {loss.item()}") 
 
 
-
 print(logits.shape)
-print(loss)
 import sys; sys.exit(0)
 #load the model
 num_return_sequences = 5
