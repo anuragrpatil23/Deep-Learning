@@ -11,7 +11,7 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-import build_nanogpt.hellaswag as hellaswag
+import hellaswag as hellaswag
 
 # ------------------------------------------------------------------------------------------------------
 
@@ -261,6 +261,7 @@ class GPT(nn.Module):
 #---------------------------------------------------------------------------------------------------------------------#
 def load_tokens(filename):
     npt = np.load(filename)
+    npt = npt.astype(np.int32)
     ptt = torch.tensor(npt, dtype=torch.long)
     return ptt
 
@@ -273,7 +274,7 @@ class DataLoaderLite:
         assert split in {'train', 'val'}
 
         #get the shard filenames
-        data_root = "edu_fineweb10B"
+        data_root = os.path.join(os.path.dirname(__file__),"edu_fineweb10B")
         shards = os.listdir(data_root)
         shards = [s for s in shards if split in s]
         shards = [os.path.join(data_root, s) for s in shards]
@@ -353,6 +354,11 @@ if torch.cuda.is_available():
 total_batch_size = 524288 # 2^19, ~0.5M, in number of tokens
 B = 16 #micro batch size
 T = 1024 #sequence length
+max_lr = 3e-4
+min_lr = max_lr * 0.1
+warmup_steps = 10 
+max_steps = 50
+
 assert total_batch_size % (B*T*ddp_world_size)==0, "make sure total batch size is divisible by B*T*ddp_world_size"
 grad_accum_steps = total_batch_size//(B*T* ddp_world_size)
 if master_process:
@@ -377,11 +383,6 @@ if ddp:
     model = DDP(model, device_ids = [ddp_local_rank])
 raw_model = model.module if ddp else model #always contains the raw unwrapped model
 
-max_lr = 3e-4
-min_lr = max_lr * 0.1
-warmup_steps = 10 
-max_steps = 50 
-
 def get_lr(it):
     #1) linear warmup for warmup_iters steps
     if it<warmup_steps:
@@ -402,10 +403,9 @@ optimizer = raw_model.configure_optimizers(weight_decay=0.1, learning_rate=6e-4,
 # create the log directory we will write checkpoints to and log to
 log_dir = "log"
 os.makedirs(os.path.join(os.path.dirname(__file__), log_dir), exist_ok=True)
-log_file = os.path.join((os.path.dirname(__file__), log_dir), f"log_rank{ddp_rank}.txt")
+log_file = os.path.join(os.path.dirname(__file__), log_dir, f"log_rank{ddp_rank}.txt")
 with open(log_file, "w") as f:
     pass
-
 
 for step in range(max_steps):
     t0 = time.time()
@@ -559,7 +559,5 @@ for step in range(max_steps):
 
 if ddp:
     destroy_process_group()
-
-import sys; sys.exit(0)
 
 
