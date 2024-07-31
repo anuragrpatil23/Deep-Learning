@@ -260,9 +260,10 @@ class GPT(nn.Module):
         return optimizer
 #---------------------------------------------------------------------------------------------------------------------#
 def load_tokens(filename):
-    npt = np.load(filename)
-    npt = npt.astype(np.int32)
-    ptt = torch.tensor(npt, dtype=torch.long)
+    with open(filename, 'rb') as f:
+        npt = np.load(f)
+        npt = npt.astype(np.int32)
+        ptt = torch.tensor(npt, dtype=torch.long)
     return ptt
 
 class DataLoaderLite:
@@ -277,6 +278,7 @@ class DataLoaderLite:
         data_root = os.path.join(os.path.dirname(__file__),"edu_fineweb10B")
         shards = os.listdir(data_root)
         shards = [s for s in shards if split in s]
+        shards = sorted(shards)
         shards = [os.path.join(data_root, s) for s in shards]
         self.shards = shards
         assert len(shards) > 0, f"no data shards found for split {split}"
@@ -352,12 +354,12 @@ if torch.cuda.is_available():
 
 
 total_batch_size = 524288 # 2^19, ~0.5M, in number of tokens
-B = 16 #micro batch size
+B = 64 #micro batch size
 T = 1024 #sequence length
 max_lr = 3e-4
 min_lr = max_lr * 0.1
 warmup_steps = 10 
-max_steps = 50
+max_steps = 10
 
 assert total_batch_size % (B*T*ddp_world_size)==0, "make sure total batch size is divisible by B*T*ddp_world_size"
 grad_accum_steps = total_batch_size//(B*T* ddp_world_size)
@@ -410,9 +412,9 @@ with open(log_file, "w") as f:
 for step in range(max_steps):
     t0 = time.time()
     last_step = (step == max_steps-1)
-
+    
     # once in a while evaluate out validation loss
-    if step %100 == 0 or last_step:
+    if (step !=0) and (step %100 == 0 or last_step):
         model.eval()
         val_loader.reset()
         with torch.no_grad():
@@ -420,6 +422,7 @@ for step in range(max_steps):
             val_loss_steps = 20
             for _ in range(val_loss_steps):
                 x, y = val_loader.next_batch()
+                
                 x, y = x.to(device), y.to(device)
                 with torch.autocast(device_type=device, dtype=torch.bfloat16):
                     logits, loss = model.forward(x, target=y)
@@ -432,8 +435,9 @@ for step in range(max_steps):
             with open(log_file, "a") as f:
                 f.write(f"{step} val {val_loss_accum.item():.4f}\n")
 
+    
     #once in a while evaluate out hellasawg validation accuracy
-    if (step % 250 == 0 or last_step) and use_compile==False:
+    if (step % 50 == 0 or last_step) and use_compile==False:
         num_correct_norm = 0
         num_total = 0
 
@@ -449,7 +453,7 @@ for step in range(max_steps):
             #get the logits
             with torch.no_grad():
                 with torch.autocast(device_type=device, dtype=torch.bfloat16):
-                    logits, loss = model.forward(x = tokens)
+                    logits, loss = model.forward(tokens)
                 pred_norm = hellaswag.get_most_likely_row(tokens, mask, logits)
                 num_total += 1
                 num_correct_norm += int(pred_norm == label)
@@ -462,16 +466,17 @@ for step in range(max_steps):
                 dist.all_reduce(num_correct_norm, op=dist.ReduceOp.SUM)
                 num_total = num_total.item()
                 num_correct_norm = num_correct_norm.item()
-            acc_norm = num_correct_norm / num_total
-            if master_process:
-                print(f"HellaSwag accuracy:{num_correct_norm}/{num_total}={acc_norm:.4f}")
-                with open(log_file, "a") as f:
-                    f.write(f"{step} hella {acc_norm:.4f}\n")
 
+        acc_norm = num_correct_norm / num_total
+        if master_process:
+            print(f"HellaSwag accuracy:{num_correct_norm}/{num_total}={acc_norm:.4f}")
+            with open(log_file, "a") as f:
+                f.write(f"{step} hella {acc_norm:.4f}\n")
 
+    
     #once in a while generate from the model (except step 0, which is noise)
     # disabled because torch.compile throws an error
-    if step>0 and step % 250 == 0 and use_compile==False:
+    if step>=0 and step % 50 == 0 and use_compile==False:
         model.eval()
         num_return_sequences = 4
         max_length = 32
@@ -489,7 +494,7 @@ for step in range(max_steps):
 
             #forward the model to get the logits
             with torch.no_grad():
-                logits, _ = model(x) #(B, T, vocab_size)
+                logits, _ = model(xgen) #(B, T, vocab_size)
                 #take the logits at the last position
                 logits = logits[:,-1, :] #(B, vocab_size)
 
@@ -515,7 +520,7 @@ for step in range(max_steps):
             decoded = enc.decode(tokens)
             print(f"rank {ddp_rank} sample {i}: {decoded}" )
 
-
+    
     # training loop
     # do one step of the optimization
     model.train()
@@ -544,8 +549,10 @@ for step in range(max_steps):
 
     optimizer.step()
 
+    
     torch.cuda.synchronize() #wait for cuda instructions to finish. cpu is just sending instructions to cuda at this point so python interpretator gotta wait for those tasks to finish before timing them. 
 
+    
     t1 = time.time()
     dt = (t1-t0)*1000 # time diff in milliseconds. 
     token_processed = train_loader.B*train_loader.T*grad_accum_steps*ddp_world_size
@@ -555,9 +562,10 @@ for step in range(max_steps):
         print(f"step {step}, loss: {loss_accum.item():.6f}, norm:{norm:.4f}, lr:{lr:.4e} dt: {dt:.2f}ms, tok/sec:{tokens_per_sec:.2f}")
         with open(log_file, "a") as f:
             f.write(f"{step} | train | {loss_accum.item():.6f} | {norm:.4f} | {lr:.4e} | {dt:.2f} | {tokens_per_sec:.2f}\n")
-
+    
 
 if ddp:
     destroy_process_group()
 
 
+import sys; sys.exit(0)
