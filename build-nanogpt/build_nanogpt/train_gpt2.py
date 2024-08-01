@@ -313,8 +313,6 @@ class DataLoaderLite:
             self.tokens = load_tokens(self.shards[self.current_shard])
             self.current_position = self.B * self.T * self.process_rank
 
-        print(f"Current shard: {self.current_shard}, Current position: {self.current_position}")
-
         return x, y
 
 
@@ -362,12 +360,13 @@ if torch.cuda.is_available():
 
 
 total_batch_size = 524288 # 2^19, ~0.5M, in number of tokens
-B = 16 #micro batch size
+B = 64 #micro batch size
 T = 1024 #sequence length
-max_lr = 3e-4
+
+max_lr = 6e-4
 min_lr = max_lr * 0.1
-warmup_steps = 10 
-max_steps = 10
+warmup_steps = 715 #based on GPT 3 Paper 
+max_steps = 15259 * 1  # 8B dataset, 0.5M batch size hence that number. * no is the epoch. 
 
 assert total_batch_size % (B*T*ddp_world_size)==0, "make sure total batch size is divisible by B*T*ddp_world_size"
 grad_accum_steps = total_batch_size//(B*T* ddp_world_size)
@@ -462,6 +461,9 @@ try:
                 print(f"validation loss: {val_loss_accum.item():.4f}")
                 with open(log_file, "a") as f:
                     f.write(f"{step} val {val_loss_accum.item():.4f}\n")
+
+                # save the model
+                save_model()
 
         
         #once in a while evaluate out hellasawg validation accuracy
