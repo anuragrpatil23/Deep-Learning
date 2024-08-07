@@ -1,0 +1,761 @@
+W0801 14:48:24.633682 47685432257408 torch/distributed/run.py:779] 
+W0801 14:48:24.633682 47685432257408 torch/distributed/run.py:779] *****************************************
+W0801 14:48:24.633682 47685432257408 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 14:48:24.633682 47685432257408 torch/distributed/run.py:779] *****************************************
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:467: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:467: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 467, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank1]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:468: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+W0801 14:49:07.235587 47685432257408 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 49569 closing signal SIGTERM
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 468, in <module>
+[rank0]:     optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank0]:     return _load(
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank0]:     result = unpickler.load()
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank0]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1457, in load_tensor
+[rank0]:     storage = zip_file.get_storage_from_record(name, numel, torch.UntypedStorage)._typed_storage()._untyped_storage
+[rank0]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 440, in signal_handler
+[rank0]:     'epoch': epoch,
+[rank0]: NameError: name 'epoch' is not defined
+E0801 14:49:08.001154 47685432257408 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 49570) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_14:49:07
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 49570)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+W0801 14:56:08.852934 47089606822784 torch/distributed/run.py:779] 
+W0801 14:56:08.852934 47089606822784 torch/distributed/run.py:779] *****************************************
+W0801 14:56:08.852934 47089606822784 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 14:56:08.852934 47089606822784 torch/distributed/run.py:779] *****************************************
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:467: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:467: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 467, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank1]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:468: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+W0801 14:56:48.277083 47089606822784 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 51143 closing signal SIGTERM
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 468, in <module>
+[rank0]:     optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank0]:     return _load(
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank0]:     result = unpickler.load()
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank0]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1457, in load_tensor
+[rank0]:     storage = zip_file.get_storage_from_record(name, numel, torch.UntypedStorage)._typed_storage()._untyped_storage
+[rank0]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 440, in signal_handler
+[rank0]:     'epoch': epoch,
+[rank0]: NameError: name 'epoch' is not defined
+E0801 14:56:49.443260 47089606822784 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 51144) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_14:56:48
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 51144)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:00:05.935126 47701349833600 torch/distributed/run.py:779] 
+W0801 15:00:05.935126 47701349833600 torch/distributed/run.py:779] *****************************************
+W0801 15:00:05.935126 47701349833600 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:00:05.935126 47701349833600 torch/distributed/run.py:779] *****************************************
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:465: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:465: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank1]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:466: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+W0801 15:00:42.352581 47701349833600 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 52117 closing signal SIGTERM
+E0801 15:00:43.920289 47701349833600 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 52118) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:00:42
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 52118)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:04:58.686335 47703301536640 torch/distributed/run.py:779] 
+W0801 15:04:58.686335 47703301536640 torch/distributed/run.py:779] *****************************************
+W0801 15:04:58.686335 47703301536640 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:04:58.686335 47703301536640 torch/distributed/run.py:779] *****************************************
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:465: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:465: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt"))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py:466: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt"))
+W0801 15:05:53.253921 47703301536640 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 53267 closing signal SIGTERM
+E0801 15:05:54.821346 47703301536640 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 53268) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:05:53
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 53268)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:15:13.440912 47328673667968 torch/distributed/run.py:779] 
+W0801 15:15:13.440912 47328673667968 torch/distributed/run.py:779] *****************************************
+W0801 15:15:13.440912 47328673667968 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:15:13.440912 47328673667968 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt", weights_only=True))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1096, in load
+[rank1]:     raise pickle.UnpicklingError(_get_wo_message(str(e))) from None
+[rank1]: _pickle.UnpicklingError: Weights only load failed. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+[rank1]:  Please file an issue with the following so that we can make `weights_only=True` compatible with your use case: WeightsUnpickler error: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+[rank1]: Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+W0801 15:16:50.602230 47328673667968 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 55264 closing signal SIGTERM
+E0801 15:16:52.069148 47328673667968 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 55265) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:16:50
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 55265)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:19:38.948782 47712041253760 torch/distributed/run.py:779] 
+W0801 15:19:38.948782 47712041253760 torch/distributed/run.py:779] *****************************************
+W0801 15:19:38.948782 47712041253760 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:19:38.948782 47712041253760 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt", weights_only=False))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:21:29.931226 47712041253760 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 56272 closing signal SIGTERM
+E0801 15:21:31.598950 47712041253760 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 56273) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:21:29
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 56273)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:22:07.818910 47202007235456 torch/distributed/run.py:779] 
+W0801 15:22:07.818910 47202007235456 torch/distributed/run.py:779] *****************************************
+W0801 15:22:07.818910 47202007235456 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:22:07.818910 47202007235456 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     if checkpoint_type == 'v1':
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:23:55.586540 47202007235456 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 56991 closing signal SIGTERM
+E0801 15:23:57.003890 47202007235456 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 56992) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:23:55
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 56992)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:24:28.538670 46993379855232 torch/distributed/run.py:779] 
+W0801 15:24:28.538670 46993379855232 torch/distributed/run.py:779] *****************************************
+W0801 15:24:28.538670 46993379855232 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:24:28.538670 46993379855232 torch/distributed/run.py:779] *****************************************
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 426, in <module>
+[rank0]:     model = DDP(model, device_ids = [ddp_local_rank])
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 739, in __init__
+[rank0]:     self._log_and_throw(
+[rank0]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1127, in _log_and_throw
+[rank0]:     raise err_type(err_msg)
+[rank0]: ValueError: DistributedDataParallel device_ids and output_device arguments only work with single-device/multiple-device GPU modules or CPU modules, but got device_ids [0], output_device None, and module parameters {device(type='cpu')}.
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 426, in <module>
+[rank1]:     model = DDP(model, device_ids = [ddp_local_rank])
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 739, in __init__
+[rank1]:     self._log_and_throw(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/nn/parallel/distributed.py", line 1127, in _log_and_throw
+[rank1]:     raise err_type(err_msg)
+[rank1]: ValueError: DistributedDataParallel device_ids and output_device arguments only work with single-device/multiple-device GPU modules or CPU modules, but got device_ids [1], output_device None, and module parameters {device(type='cpu')}.
+[rank0]:[W801 15:25:33.854754031 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On normal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare cases this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this warning has only been added since PyTorch 2.4 (function operator())
+W0801 15:25:33.467972 46993379855232 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 57660 closing signal SIGTERM
+E0801 15:25:33.882587 46993379855232 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 57659) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:25:33
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 57659)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:28:00.726586 47883251592064 torch/distributed/run.py:779] 
+W0801 15:28:00.726586 47883251592064 torch/distributed/run.py:779] *****************************************
+W0801 15:28:00.726586 47883251592064 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:28:00.726586 47883251592064 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt", weights_only=False))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:28:51.580918 47883251592064 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 58516 closing signal SIGTERM
+E0801 15:28:53.148043 47883251592064 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 58517) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:28:51
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 58517)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:29:32.625695 47100375776128 torch/distributed/run.py:779] 
+W0801 15:29:32.625695 47100375776128 torch/distributed/run.py:779] *****************************************
+W0801 15:29:32.625695 47100375776128 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:29:32.625695 47100375776128 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt", weights_only=False))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:30:30.337487 47100375776128 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 59073 closing signal SIGTERM
+E0801 15:30:31.855428 47100375776128 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 59074) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:30:30
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 59074)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:34:22.565162 47310275296128 torch/distributed/run.py:779] 
+W0801 15:34:22.565162 47310275296128 torch/distributed/run.py:779] *****************************************
+W0801 15:34:22.565162 47310275296128 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:34:22.565162 47310275296128 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 465, in <module>
+[rank1]:     model.load_state_dict(torch.load("model_checkpoint.pt", weights_only=False))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:34:54.770646 47310275296128 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 60259 closing signal SIGTERM
+E0801 15:34:56.088384 47310275296128 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 60260) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:34:54
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 60260)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:40:14.610751 47834740763520 torch/distributed/run.py:779] 
+W0801 15:40:14.610751 47834740763520 torch/distributed/run.py:779] *****************************************
+W0801 15:40:14.610751 47834740763520 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:40:14.610751 47834740763520 torch/distributed/run.py:779] *****************************************
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/sc/arion/work/patila06/Projects/build-nanogpt/build_nanogpt/train_gpt2.py", line 466, in <module>
+[rank1]:     optimizer.load_state_dict(torch.load("optimizer_checkpoint.pt", weights_only=False, map_location={'cuda:0': device}))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1097, in load
+[rank1]:     return _load(
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1525, in _load
+[rank1]:     result = unpickler.load()
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1492, in persistent_load
+[rank1]:     typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 1466, in load_tensor
+[rank1]:     wrap_storage=restore_location(storage, location),
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 414, in default_restore_location
+[rank1]:     result = fn(storage, location)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/serialization.py", line 392, in _deserialize
+[rank1]:     return obj.to(device=device)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/storage.py", line 187, in to
+[rank1]:     return _to(self, device, non_blocking)
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/_utils.py", line 75, in _to
+[rank1]:     with device_module.device(device):
+[rank1]:   File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/cuda/__init__.py", line 386, in __enter__
+[rank1]:     self.prev_idx = torch.cuda._exchange_device(self.idx)
+[rank1]: RuntimeError: CUDA error: CUDA-capable device(s) is/are busy or unavailable
+[rank1]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+W0801 15:40:50.429087 47834740763520 torch/distributed/elastic/multiprocessing/api.py:858] Sending process 61504 closing signal SIGTERM
+E0801 15:40:51.746478 47834740763520 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 1 (pid: 61505) of binary: /sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/python
+Traceback (most recent call last):
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 348, in wrapper
+    return f(*args, **kwargs)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/sc/arion/work/patila06/VirtualEnvs/nanogpt_venv_3104/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+build_nanogpt/train_gpt2.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2024-08-01_15:40:50
+  host      : lg06g28.chimera.hpc.mssm.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 61505)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
+Error opening terminal: unknown.
+W0801 15:41:48.461725 47296680897408 torch/distributed/run.py:779] 
+W0801 15:41:48.461725 47296680897408 torch/distributed/run.py:779] *****************************************
+W0801 15:41:48.461725 47296680897408 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0801 15:41:48.461725 47296680897408 torch/distributed/run.py:779] *****************************************
